@@ -1,0 +1,40 @@
+﻿  main.cpp
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(32): warning C4309: 'default argument': truncation of constant value
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(108): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(119): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(187): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(187): warning C4244: 'argument': conversion from 'uint64_t' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(189): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(189): warning C4244: 'argument': conversion from 'uint64_t' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(200): warning C4244: 'return': conversion from '_Rep' to 'int', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(208): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(283): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(283): warning C4244: 'argument': conversion from 'uint64_t' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(285): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(285): warning C4244: 'argument': conversion from 'uint64_t' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(344): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(344): warning C4244: 'argument': conversion from 'uint64_t' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(346): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(346): warning C4244: 'argument': conversion from 'uint64_t' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(392): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(416): warning C4244: 'argument': conversion from 'uint64_t' to 'unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(417): warning C4244: 'argument': conversion from 'uint64_t' to 'unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(420): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(421): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(422): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(426): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(428): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(429): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(430): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(437): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(437): warning C4244: 'argument': conversion from 'uint64_t' to 'unsigned int', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(468): warning C4244: '=': conversion from 'float' to 'BYTE', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(469): warning C4244: '=': conversion from 'float' to 'BYTE', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(470): warning C4244: '=': conversion from 'float' to 'BYTE', possible loss of data
+C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\main.cpp(489): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+  RGB_ProcessingWin.vcxproj -> C:\Users\Greg\OneDrive\Dokumente\PC programming\RGB_ProcessingWin\RGB_ProcessingWin\Debug\RGB_ProcessingWin.exe
