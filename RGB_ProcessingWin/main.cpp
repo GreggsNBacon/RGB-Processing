@@ -4,18 +4,16 @@
 #include <math.h>
 #include <cmath>
 #include <fstream>
-//Thread building blocks library
-#include <tbb/task_scheduler_init.h>
-
 #include <random>
 #include <chrono>
-//Free Image library
-#include <FreeImagePlus.h>
+//Thread building blocks library
+#include <tbb/task_scheduler_init.h>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
 #include <tbb/blocked_range2d.h>
 #include <tbb/parallel_reduce.h>
-
+//Free Image library
+#include <FreeImagePlus.h>
 
 using namespace std;
 using namespace tbb;
@@ -122,7 +120,7 @@ void grainTest(int sampleSize, int minGrain, int maxGrain, float step)
 		int val = grainModification(sampleSize, i);
 		csvFile << "Grain " << to_string(i) << "," << to_string(val) << "\n";
 		//for proper increments starting at 1
-		if (i == 1) i = 0;
+		if (i == 1 && step > 1) i = 0;
 	}
 	csvFile.close();
 
@@ -316,12 +314,15 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 
 			int startingPosX = sampleSize;
 			int startingPosY = sampleSize;
+			//accesses each pixel
 			for (uint64_t y = y1; y < y2; ++y)
 			{
 				for (uint64_t x = x1; x < x2; ++x)
 				{
+					//pixel value for currently accessed pixel
 					float pixelValue = 0.0f;
 
+					//starting position adjustments
 					if (x <= sampleSize) startingPosX = 0;
 					else startingPosX = sampleSize;
 
@@ -331,13 +332,15 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 					int timesToRun = 1;
 					if (startingPosX == 0) timesToRun *= 2;
 					if (startingPosY == 0) timesToRun *= 2;
-
+					//compensates just incase pixel is too close to edge
 					for (int compensation = 0; compensation < timesToRun; compensation++)
 					{
+						//accesses surrounding pixels in kernel
 						for (uint64_t nx = x - startingPosX; nx <= (x + sampleSize); nx++)
 						{
 							for (uint64_t ny = y - startingPosY; ny <= (y + sampleSize); ny++)
 							{
+								//checks if the surrounding pixel is within the image bounds
 								if ((ny > 0 && ny < height) && (nx > 0 && nx < width))
 									pixelValue += (gaussian2D(x, y, nx, ny, sigma) * inputBuffer[ny * width + nx]);
 								else
@@ -345,6 +348,7 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 							}
 						}
 					}
+					//1D array to 2D array
 					outputBuffer[y * width + x] = pixelValue;
 				}
 			}
@@ -363,6 +367,7 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 	meanSpeedup /= double(numTests);
 	cout << "Mean speedup = " << meanSpeedup << endl;
 
+	//closes CSV
 	if (numTests > 1)csvFile.close();
 
 	cout << "Saving parallel version of image...\n";
@@ -376,13 +381,14 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 
 void part2Func(float threshold, bool runThreshold, bool runRedPixel)
 {
-	// Setup Input image array
+	// Setup Input images
 	fipImage inputImage;
 	inputImage.load("../Images/render_1_lowres.png");
 
 	fipImage secondImage;
 	secondImage.load("../Images/render_2_lowres.png");
-
+	
+	//get first image width and height
 	unsigned int width = inputImage.getWidth();
 	unsigned int height = inputImage.getHeight();
 
@@ -400,6 +406,7 @@ void part2Func(float threshold, bool runThreshold, bool runRedPixel)
 
 	cout << "Runnin parallel RGB subtraction\n";
 	parallel_for(blocked_range2d<uint64_t, uint64_t>(0, height, 8, 0, width, width >> 2), [&](const blocked_range2d<uint64_t, uint64_t>& r) {
+		//RGBQUAD values for currently accessed pixels in images 1 and 2
 		RGBQUAD rgb;
 		RGBQUAD rgb2;
 		auto y1 = r.rows().begin();
@@ -421,22 +428,21 @@ void part2Func(float threshold, bool runThreshold, bool runRedPixel)
 
 				if (runThreshold) //if the user wants to run the threshold to produce a white and black image
 				{
-					if (rgbValues[y][x].rgbRed + rgbValues[y][x].rgbGreen + rgbValues[y][x].rgbBlue > threshold) //if the value is above the threshold the pixel must be set to white
+					//if the value is above the threshold the pixel must be set to white
+					if (rgbValues[y][x].rgbRed + rgbValues[y][x].rgbGreen + rgbValues[y][x].rgbBlue > threshold) 
 					{
 						rgbValues[y][x].rgbRed = 255;
 						rgbValues[y][x].rgbGreen = 255;
 						rgbValues[y][x].rgbBlue = 255;
 					}
-					
 				}
-				
 				//must be done outside of threshold incase threshold is not run
-
 				outputImage.setPixelColor(x, y, &rgbValues[y][x]);
 			}
 		}
 	});
 	
+	//parallel reduce can return int. This is used to count how many white pixels are in the image (perfectly white).
 	int whitePixelCounter = parallel_reduce(blocked_range2d<int, int>(0, height, 0, width), 0, [&](blocked_range2d< int, int> & range, int count) ->int 
 	{
 		for (int x = range.cols().begin(); x < range.cols().end(); x++) 
@@ -451,6 +457,7 @@ void part2Func(float threshold, bool runThreshold, bool runRedPixel)
 		}
 		return count;
 	}, [&](int x, int y) -> int {return x + y; });
+	//white pixel calculations
 	float whitePixelPercent = (whitePixelCounter / totalPixels) * 100.0f;
 	cout << "White Pixels = " << whitePixelCounter << endl;
 	cout << "White Pixel % = " << whitePixelPercent << endl;
