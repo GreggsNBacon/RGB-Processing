@@ -19,10 +19,10 @@
 
 using namespace std;
 using namespace tbb;
-using namespace std::chrono;
+using namespace chrono;
 
 //FOR TESTING PURPOSES
-std::ofstream csvFile;
+ofstream csvFile;
 
 //PROTOTYPES
 int grainModification(int sampleSizeInput = 4, int grain = 8);
@@ -51,7 +51,7 @@ void UIFunc()
 	//Part 1 (Greyscale Gaussian blur): -----------DO NOT REMOVE THIS COMMENT----------------------------//
 	cout << "Would you like to run the gaussian blur function (y/n)?\n";
 	cin >> input;
-	std::transform(input.begin(), input.end(), input.begin(), ::tolower);
+	transform(input.begin(), input.end(), input.begin(), ::tolower);
 	if (input == "y" || input == "yes") {
 		int sampleSize = -1;
 		int tests = -1;
@@ -62,7 +62,7 @@ void UIFunc()
 			cin >> sampleSize;
 		}
 		cout << "Would you like to run the sequential version (y/n)?\n";
-		std::transform(input2.begin(), input2.end(), input2.begin(), ::tolower);
+		transform(input2.begin(), input2.end(), input2.begin(), ::tolower);
 		cin >> input2;
 		if (input2 == "y" || input2 == "yes")
 		{
@@ -79,7 +79,7 @@ void UIFunc()
 	input = "";
 	cout << "Would you like to run the Colour Image processingfunction (y/n)?\n";
 	cin >> input;
-	std::transform(input.begin(), input.end(), input.begin(), ::tolower);
+	transform(input.begin(), input.end(), input.begin(), ::tolower);
 	if (input == "y" || input == "yes") {
 		int threshold = -1;
 		int tests = -1;
@@ -88,7 +88,7 @@ void UIFunc()
 		string input2 = "";
 
 		cout << "Would you like to run the threshold (y/n)?\n";
-		std::transform(input2.begin(), input2.end(), input2.begin(), ::tolower);
+		transform(input2.begin(), input2.end(), input2.begin(), ::tolower);
 		cin >> input2;
 		if (input2 == "y" || input2 == "yes")
 		{
@@ -99,7 +99,7 @@ void UIFunc()
 			}
 		}
 		cout << "Would you like to run the red dot (y/n)?\n";
-		std::transform(input2.begin(), input2.end(), input2.begin(), ::tolower);
+		transform(input2.begin(), input2.end(), input2.begin(), ::tolower);
 		cin >> input2;
 		if (input2 == "y" || input2 == "yes")
 		{
@@ -112,15 +112,15 @@ void UIFunc()
 void grainTest(int sampleSize, int minGrain, int maxGrain, float step) 
 {
 	cout << "Running Grain Test\n\n";
-	csvFile.open("SampleSize_" + std::to_string(sampleSize) + "-" 
-		+ std::to_string(minGrain) + "_" + std::to_string(maxGrain) 
-		+ "-grain_test-" + std::to_string(chrono::system_clock::to_time_t(chrono::system_clock::now()))+ ".csv");
+	csvFile.open("SampleSize_" + to_string(sampleSize) + "-" 
+		+ to_string(minGrain) + "_" + to_string(maxGrain) 
+		+ "-grain_test-" + to_string(chrono::system_clock::to_time_t(chrono::system_clock::now()))+ ".csv");
 	csvFile << "Grain Size" << "," << "Parallel Duration" << "\n";
 	for (int i = minGrain; i <= maxGrain; i += step) 
 	{
 		cout << "Grain Size: " << i <<endl;
 		int val = grainModification(sampleSize, i);
-		csvFile << "Grain " << std::to_string(i) << "," << std::to_string(val) << "\n";
+		csvFile << "Grain " << to_string(i) << "," << to_string(val) << "\n";
 		//for proper increments starting at 1
 		if (i == 1) i = 0;
 	}
@@ -226,7 +226,7 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 	//save results if code is being run more than once
 	if (numTests > 1)
 	{
-		csvFile.open(std::to_string(sampleSizeInput) + "_sampleSize.csv");
+		csvFile.open(to_string(sampleSizeInput) + "_sampleSize.csv");
 		csvFile << "Sequential Duration" << "," << "Parallel Duration" << "," << "Speedup" << "\n";
 	}
 	// Setup and load input image dataset
@@ -300,14 +300,14 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 		else cout << "Sequential version not run...ignore\n";
 		auto st2 = high_resolution_clock::now();
 		auto st_dur = duration_cast<microseconds>(st2 - st1);
-		std::cout << "sequential gaussian operation took = " << st_dur.count() << "\n\n\n";
+		cout << "sequential gaussian operation took = " << st_dur.count() << "\n\n\n";
 
 		// parallel_for version
 
 		cout << "Parallel Gaussian Function running now...\n";
 		auto pt1 = high_resolution_clock::now();
 
-		tbb::parallel_for(blocked_range2d<uint64_t, uint64_t>(0, height, 8, 0, width, width >> 2), [&](const blocked_range2d<uint64_t, uint64_t>& r) 
+		parallel_for(blocked_range2d<uint64_t, uint64_t>(0, height, 8, 0, width, width >> 2), [&](const blocked_range2d<uint64_t, uint64_t>& r) 
 		{
 			auto y1 = r.rows().begin();
 			auto y2 = r.rows().end();
@@ -353,25 +353,25 @@ void gaussianBlurFuncBW(int sampleSizeInput, bool runSequential , uint64_t testN
 		auto pt2 = high_resolution_clock::now();
 		cout << "Test Complete" << endl;
 		auto pt_dur = duration_cast<microseconds>(pt2 - pt1);
-		std::cout << "parallel gaussian operation took = " << pt_dur.count() << "\n\n\n";
+		cout << "parallel gaussian operation took = " << pt_dur.count() << "\n\n\n";
 
 		double speedup = double(st_dur.count()) / double(pt_dur.count());
-		std::cout << "Test " << testIndex << " speedup = " << speedup << endl;
-		if (numTests > 1) csvFile << std::to_string(st_dur.count()) << "," << std::to_string(pt_dur.count()) << "," << std::to_string(speedup) << "\n";
+		cout << "Test " << testIndex << " speedup = " << speedup << endl;
+		if (numTests > 1) csvFile << to_string(st_dur.count()) << "," << to_string(pt_dur.count()) << "," << to_string(speedup) << "\n";
 		meanSpeedup += speedup;
 	}
 	meanSpeedup /= double(numTests);
-	std::cout << "Mean speedup = " << meanSpeedup << endl;
+	cout << "Mean speedup = " << meanSpeedup << endl;
 
 	if (numTests > 1)csvFile.close();
 
-	std::cout << "Saving parallel version of image...\n";
+	cout << "Saving parallel version of image...\n";
 
 	outputImage.convertToType(FREE_IMAGE_TYPE::FIT_BITMAP);
 	outputImage.convertTo32Bits();
 	outputImage.save("grey_blurred.png");
 
-	std::cout << "...done\n\n";
+	cout << "...done\n\n";
 }
 
 void part2Func(float threshold, bool runThreshold, bool runRedPixel)
@@ -398,8 +398,8 @@ void part2Func(float threshold, bool runThreshold, bool runRedPixel)
 	rgbValues.resize(height, vector<RGBQUAD>(width));
 
 
-	std::cout << "Runnin parallel RGB subtraction\n";
-	tbb::parallel_for(blocked_range2d<uint64_t, uint64_t>(0, height, 8, 0, width, width >> 2), [&](const blocked_range2d<uint64_t, uint64_t>& r) {
+	cout << "Runnin parallel RGB subtraction\n";
+	parallel_for(blocked_range2d<uint64_t, uint64_t>(0, height, 8, 0, width, width >> 2), [&](const blocked_range2d<uint64_t, uint64_t>& r) {
 		RGBQUAD rgb;
 		RGBQUAD rgb2;
 		auto y1 = r.rows().begin();
@@ -452,12 +452,12 @@ void part2Func(float threshold, bool runThreshold, bool runRedPixel)
 		return count;
 	}, [&](int x, int y) -> int {return x + y; });
 	float whitePixelPercent = (whitePixelCounter / totalPixels) * 100.0f;
-	std::cout << "White Pixels = " << whitePixelCounter << endl;
-	std::cout << "White Pixel % = " << whitePixelPercent << endl;
-	std::cout << "Finished Parallel\n";
+	cout << "White Pixels = " << whitePixelCounter << endl;
+	cout << "White Pixel % = " << whitePixelPercent << endl;
+	cout << "Finished Parallel\n";
 
 	if (runRedPixel) {
-		std::cout << "Now finding random red pixel: \n";
+		cout << "Now finding random red pixel: \n";
 		//determines random red pixel location
 		int randomX = rand() % width;
 		int randomY = rand() % height;
@@ -474,7 +474,7 @@ void part2Func(float threshold, bool runThreshold, bool runRedPixel)
 
 
 		//parallel for to loop through the image again to find the red pixel
-		tbb::parallel_for(blocked_range2d<uint64_t, uint64_t>(0, height, 8, 0, width, width >> 2), [&](const blocked_range2d<uint64_t, uint64_t>& r) {
+		parallel_for(blocked_range2d<uint64_t, uint64_t>(0, height, 8, 0, width, width >> 2), [&](const blocked_range2d<uint64_t, uint64_t>& r) {
 			auto y1 = r.rows().begin();
 			auto y2 = r.rows().end();
 			auto x1 = r.cols().begin();
