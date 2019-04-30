@@ -75,7 +75,7 @@ void UIFunc()
 	//Part 2 (Colour image processing): -----------DO NOT REMOVE THIS COMMENT----------------------------//
 
 	input = "";
-	cout << "Would you like to run the Colour Image processingfunction (y/n)?\n";
+	cout << "Would you like to run the Colour Image processing function (y/n)?\n";
 	cin >> input;
 	transform(input.begin(), input.end(), input.begin(), ::tolower);
 	if (input == "y" || input == "yes") {
